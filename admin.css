@@ -1,0 +1,80 @@
+body{
+    background-color: #171717;
+}
+.title{
+    font-size: 90px;
+    color: #E54B4B;
+    text-align: center;
+    font-family: 'Josefin Sans', sans-serif;
+    
+}
+input{
+    width: 40%;
+    height: 80px;
+    border-radius: 10px;
+    border: 1px solid #E54B4B ;
+    outline: none;
+    padding-left: 10px;
+    font-size: 20px;
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: #171717;
+    color: #E54B4B;
+    font-size: 50px;
+    text-align: center;
+}
+button{
+    width: 20%;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #E54B4B ;
+    outline: none;
+    padding-left: 10px;
+    font-size: 20px;
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: #171717;
+    color: #E54B4B;
+    font-size: 25px;
+    text-align: center;
+    cursor: pointer;
+}
+button:hover{
+    background-color: #E54B4B;
+    color: #171717;
+    transition: 0.5s;
+}
+#go{
+    background-color:transparent;
+    border: none ;
+    font-size: 40px;
+    color: #E54B4B;
+    font-family: 'Josefin Sans', sans-serif;
+    cursor: pointer;
+    border-radius: 10px;
+    height: 70px;
+    transition: transform 0.3s ease-in-out; 
+}
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #E54B4B; 
+    border-radius: 5px;
+    outline: none;
+    background-color: transparent;
+  }
+  
+  input[type="checkbox"]:checked {
+    background-color: #E54B4B; 
+  }
+
+label{
+    font-size: 40px;
+    color: #E54B4B;
+    font-family: 'Josefin Sans', sans-serif;
+}h2{
+    font-size: 40px;
+    color: #E54B4B;
+    font-family: 'Josefin Sans', sans-serif;
+}

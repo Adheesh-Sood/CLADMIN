@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<center> 
+<body>
+    <center>
+    <h1 class="title">Admin</h1>
+    <br>
+    <br>
+    <input type="text" name="roomname" id="roomname" placeholder="roomname">
+    <br>
+    <br>
+    <input type="number" name="times" id="times" placeholder="enter number of links/Quiestions">
+    <br>
+    <br>
+        <br>
+        <br>
+    <button id="go">Go</button>
+    <br>
+     <label for="quizcheck">Quiz?</label><input type="checkbox" name="quizcheck" id="quizcheck">
+    <br>
+    <br>
+
+
+
+    <div id="inputContainer"></div>
+</center>
+<br>
+<br>
+<br>
+<button id="check">Make Quiz</button>
+<center>
+<button id="checkdata">Submit data</button>
+</center>
+<button id="checkquiz">check quiz scores</button>
+
+    <script type="module" defer>
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+        import { getDatabase, ref, push, set , onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB54rMo9k-zgp2eRoThQxooySKsNzRonUM",
+            authDomain: "classcraft-6be34.firebaseapp.com",
+            projectId: "classcraft-6be34",
+            databaseURL: "https://classcraft-6be34-default-rtdb.asia-southeast1.firebasedatabase.app",
+            storageBucket: "classcraft-6be34.appspot.com",
+            messagingSenderId: "945811480596",
+            appId: "1:945811480596:web:604a3f32d46a9427f30701",
+            measurementId: "G-3KM6RDH8SH"
+        };
+
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase();
+        let timesInput = document.getElementById("times");
+        let inputContainer = document.getElementById("inputContainer");
+        document.getElementById('checkdata').style.display = 'none';
+        if (timesInput && inputContainer) {
+            document.getElementById("go").addEventListener("click", function() {
+                
+                document.getElementById('checkdata').style.display = 'block';
+                let times = parseInt(timesInput.value);
+                inputContainer.innerHTML = ''; // Clear previous inputs
+                for (let i = 0; i < times; i++) {
+                    let input = document.createElement("input");
+                    input.placeholder = "enter youtube iframes!";
+                    input.type = "text";
+                    input.name = "dynamicInput" + i;
+                    inputContainer.appendChild(input);
+                    inputContainer.appendChild(document.createElement("br"))
+                    inputContainer.appendChild(document.createElement("br")); // linebrake
+                    ; // Add a line break
+                }
+
+                // Log the values of the inputs
+                let dynamicInputs = inputContainer.querySelectorAll("input");
+                dynamicInputs.forEach(function(input) {
+                    console.log(input.value);
+                });
+                document.getElementById('checkdata').addEventListener('click', function(){
+                    dynamicInputs.forEach(function(input) {
+                    
+                    console.log(input.value);
+                    const postListRef = ref(database, 'room/' + document.getElementById('roomname').value + '/data');                    const newPostRef = push(postListRef);
+                    set(newPostRef, {
+                        'data': input.value,
+})
+                        
+                    
+                     })
+                })
+            });
+        } else {
+            console.error("Element with id 'times' or 'inputContainer' not found");
+        }
+
+
+const checkbox = document.getElementById('quizcheck');
+const timeinp = document.getElementById('times');
+const inpcon = document.getElementById('inputContainer');
+checkbox.addEventListener('change' , function (){
+    VID = document.getElementById('')
+})
+checkbox.addEventListener('change', function() {
+  if (this.checked) {
+    console.log('Checkbox is checked');
+    timeinp.placeholder = 'Enter number of questions';
+    inpcon.innerHTML = ''; // Clear previous inputs
+    for (let i = 0; i < timesInput.value; i++) {
+      const questionInput = document.createElement('input');
+      questionInput.placeholder = 'Enter question ' + (i + 1); 
+      questionInput.type = 'text';
+      inpcon.appendChild(questionInput);
+
+      const answerInput = document.createElement('input');
+      answerInput.placeholder = 'Enter answer ' + (i + 1);
+      answerInput.type = 'text';
+      inpcon.appendChild(answerInput);
+      document.getElementById('check').addEventListener('click' , ()=>{
+        console.log( 'question '+questionInput.value)
+        console.log( 'answer '+answerInput.value)
+      })
+      const postListRef = ref(database, 'room/' + document.getElementById('roomname').value + '/quiz');
+      const newPostRef = push(postListRef);
+      let nm = 0;
+      document.getElementById("check").addEventListener('click' , function(){
+        
+        set(newPostRef, {
+            'question': questionInput.value,
+            'answer': answerInput.value,
+            
+        })
+      })
+           
+    }
+  } else {
+    console.log('Checkbox is unchecked');
+    var i = document.getElementById('times')
+    i.placeholder = 'enter number of links'
+  }
+});
+document.getElementById('checkquiz').addEventListener('click' , ()=>{
+  const dbRef = ref(database, 'scores/' + document.getElementById('roomname').value + '/name ');
+
+  onValue(dbRef, (snapshot) => {
+    snapshot.forEach((childSnapshot) => {
+      const childKey = childSnapshot.key;
+      const childData = childSnapshot.val();
+      console.log(childKey, childData.name , childData.score , childData.percentage);
+      let name = document.createElement('h2');
+      name.innerHTML = "name : " +  childData.name;
+      let score =  document.createElement('h2');
+      score.innerHTML = "score : " +  childData.score;
+      let percent = document.createElement('h2');
+      percent.innerHTML = "percentage : " + childData.score[0] / childData.score[2] * 100 + "%";
+      document.body.appendChild(name);
+      document.body.appendChild(score);
+      document.body.appendChild(percent);
+      console.log(childData.score[0] / childData.score[2] * 100 + "%");
+
+    // ...
+  });
+}, {
+  onlyOnce: true
+});
+})
+    </script>
+</body>
+</center>
+</html>
